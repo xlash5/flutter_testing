@@ -10,6 +10,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:flutter_testing/main.dart';
 import '../lib/EmailFieldValidator.dart';
+import '../lib/MyButton.dart';
 
 void main() {
   test('emty email returns error string', () {
@@ -25,5 +26,36 @@ void main() {
   test('test if normal email is valid', () {
     var result = EmailFieldValidator.validate('test@mail.com');
     expect(result, null);
+  });
+
+  Widget makeTestableWidget({Widget? child}) {
+    return MaterialApp(
+      home: child,
+    );
+  }
+
+  testWidgets('Login Screen appearance', (WidgetTester tester) async {
+    await tester.pumpWidget(makeTestableWidget(child: MyApp()));
+
+    expect(find.text('Enter your email'), findsOneWidget);
+  });
+
+  testWidgets('overflow', (WidgetTester tester) async {
+    String generateVeryLongString() {
+      String result = '';
+      for (int i = 0; i < 100; i++) {
+        result += 'very long string ';
+      }
+      return result;
+    }
+
+    await tester.pumpWidget(
+      makeTestableWidget(
+        child: MyButton(
+          emailController: TextEditingController(),
+          text: generateVeryLongString(),
+        ),
+      ),
+    );
   });
 }

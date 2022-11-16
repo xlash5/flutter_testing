@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import './EmailFieldValidator.dart';
+import 'MyButton.dart';
 
 void main() {
   runApp(
@@ -44,7 +45,8 @@ class _MyAppState extends State<MyApp> {
               ),
               keyboardType: TextInputType.emailAddress,
               validator: ((value) => EmailFieldValidator.validate(value!)),
-            )
+            ),
+            MyButton(emailController: _emailController, text: 'test'),
           ],
         ),
       ),
