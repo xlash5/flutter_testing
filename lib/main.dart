@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import './EmailFieldValidator.dart';
 import 'MyButton.dart';
+import './ScrollableRowWidget.dart';
 
 void main() {
   runApp(
@@ -47,6 +48,25 @@ class _MyAppState extends State<MyApp> {
               validator: ((value) => EmailFieldValidator.validate(value!)),
             ),
             MyButton(emailController: _emailController, text: 'test'),
+            ScrollableRowWidget(
+              children: [
+                // colorful containers
+                for (int i = 0; i < 100; i++)
+                  Container(
+                    child: Text('B${i}'),
+                    width: 100,
+                    height: 100,
+                    margin: EdgeInsetsGeometry.lerp(const EdgeInsets.all(10),
+                        const EdgeInsets.all(20), i / 100)!,
+                    color: Color.fromARGB(
+                      255,
+                      i * 2,
+                      i * 3,
+                      i * 4,
+                    ),
+                  ),
+              ],
+            ),
           ],
         ),
       ),

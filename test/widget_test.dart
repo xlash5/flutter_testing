@@ -11,6 +11,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_testing/main.dart';
 import '../lib/EmailFieldValidator.dart';
 import '../lib/MyButton.dart';
+import '../lib/RowWidget.dart';
+import '../lib/ScrollableRowWidget.dart';
 
 void main() {
   test('emty email returns error string', () {
@@ -54,6 +56,40 @@ void main() {
         child: MyButton(
           emailController: TextEditingController(),
           text: generateVeryLongString(),
+        ),
+      ),
+    );
+  });
+
+  // this will pass the test
+  testWidgets('Test Row Overflow', (WidgetTester tester) async {
+    //generate lots of widgets to test Overflow
+    List<Widget> myWidgets = [];
+    for (int i = 0; i < 100; i++) {
+      myWidgets.add(Text('test'));
+    }
+
+    await tester.pumpWidget(
+      makeTestableWidget(
+        child: ScrollableRowWidget(
+          children: myWidgets,
+        ),
+      ),
+    );
+  });
+
+  // this will throw overflow error
+  testWidgets('Test Row Overflow', (WidgetTester tester) async {
+    //generate lots of widgets to test Overflow
+    List<Widget> myWidgets = [];
+    for (int i = 0; i < 100; i++) {
+      myWidgets.add(const Text('test'));
+    }
+
+    await tester.pumpWidget(
+      makeTestableWidget(
+        child: RowWidget(
+          children: myWidgets,
         ),
       ),
     );
